@@ -194,11 +194,11 @@ public class JuliaSetGenerator{
 
 
   public static void drawJulia(DisplayWindow rightWin, ComplexNumber lP){
-
+    //creating a double for loop to iterate through all the pixels
     ComplexNumber complexZero = new ComplexNumber(0,0);
-    for(double i = rightWin.getRMin(); i <= rightWin.getRMax(); i+= rightWin.getStepSizeX()){
+    for(double i = rightWin.getRMin(); i <= rightWin.getRMax(); i+= rightWin.getStepSizeX()){//dynamic step size in displayWindow.java
       for(double k = rightWin.getIMin(); k <= rightWin.getIMax(); k+= rightWin.getStepSizeY()){
-        ComplexNumber c = new ComplexNumber(i,k);
+        ComplexNumber c = new ComplexNumber(i,k);//in complexNum
         // System.out.println(mandelRec(c, 0,  complexZero));
 
         int count = mandelRec(lP, 0,  c);
@@ -212,7 +212,7 @@ public class JuliaSetGenerator{
         StdDraw.filledCircle(rightWin.mapX(i),rightWin.mapY(k),1);
       }
     }
-    StdDraw.show();
+    StdDraw.show(); 
   }//end drawJulia
 
 
@@ -221,7 +221,7 @@ public class JuliaSetGenerator{
     ComplexNumber ret = Zn1.square().add(c);
     if(ret.magnitude() > 2){
       return count;
-    } else if(count > 360){
+    } else if(count > 360){//changing this number would create more definition
       return -1;
     } else{
       return mandelRec(c, count+1, ret);

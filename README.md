@@ -1,9 +1,9 @@
 # Mandelbrot and Julia Set Generator
  This is a mandelbrot visualizer using Java
 
+javac JuliaSetGenerator.java will compile all the necessary code
 
 Controls
-
 
 [i] - will zoom in on the Mandelbrot side focusing on the center of the window (left)<br />
 [o] - will zoom out on the Mandelbrot side focusing on the center of the window (left)<br />
