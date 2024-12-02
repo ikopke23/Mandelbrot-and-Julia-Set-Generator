@@ -3,6 +3,10 @@
 
 javac JuliaSetGenerator.java will compile all the necessary code
 
+Command line arguments: x [int] y [int]
+    x = amount of pixels for the entire window, recommend it being a multiple of 800
+    y = amount of pixels for the entire window, recomment it being a multiple of 350
+
 Controls
 
 [i] - will zoom in on the Mandelbrot side focusing on the center of the window (left)<br />

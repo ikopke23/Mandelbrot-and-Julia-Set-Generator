@@ -13,12 +13,28 @@ import java.awt.Color;
 public class JuliaSetGenerator{
 
   public static void main(String args[]){
-    StdDraw.setCanvasSize(800,350);
-    StdDraw.setXscale(0,800);
-    StdDraw.setYscale(0,300);
+    int x = 800;
+    int y = 350;
+    //for(int i = 0; i < args.length; i++){
+      //  System.out.println(args[i]);
+
+    //}
+    if(args.length > 0){
+      try {
+        x = Integer.parseInt(args[0]);
+        y = Integer.parseInt(args[1]);
+      }
+      catch (NumberFormatException e) {
+        x = 800;
+        y = 350;
+      } 
+    }
+    StdDraw.setCanvasSize(x,y);
+    StdDraw.setXscale(0,x);
+    StdDraw.setYscale(0,y);
     StdDraw.enableDoubleBuffering();
-    DisplayWindow leftWin= new DisplayWindow(0,50,400,250);
-    DisplayWindow rightWin = new DisplayWindow(400,50,400,250);
+    DisplayWindow leftWin= new DisplayWindow(0,50,x/2,y-100);
+    DisplayWindow rightWin = new DisplayWindow(x/2,50,x/2,y-100);
     boolean julia = false;
     ComplexNumber JC = new ComplexNumber();
 
@@ -37,9 +53,9 @@ public class JuliaSetGenerator{
           // System.out.println(lP.toString());
           if(StdDraw.mousePressed()){
             System.out.println("LEFT RECENTER");
-            leftWin.println();
+            // leftWin.println();
             leftWin.recenter(lP);
-            leftWin.println();
+            // leftWin.println();
             JC = lP; // used as a save for the complex number clicked on
             julia = true; //so the code knows when to initially draw the Julia set
             drawMandelbrot(leftWin);
@@ -49,7 +65,7 @@ public class JuliaSetGenerator{
 
           if(StdDraw.mousePressed()){
             System.out.println("RIGHT RECENTER");
-            // rightWin.recenter(rP);
+            rightWin.recenter(rP);
             drawJulia(rightWin, JC);
           }
         }//end click else if statement
@@ -194,11 +210,11 @@ public class JuliaSetGenerator{
 
 
   public static void drawJulia(DisplayWindow rightWin, ComplexNumber lP){
-    //creating a double for loop to iterate through all the pixels
+
     ComplexNumber complexZero = new ComplexNumber(0,0);
-    for(double i = rightWin.getRMin(); i <= rightWin.getRMax(); i+= rightWin.getStepSizeX()){//dynamic step size in displayWindow.java
+    for(double i = rightWin.getRMin(); i <= rightWin.getRMax(); i+= rightWin.getStepSizeX()){
       for(double k = rightWin.getIMin(); k <= rightWin.getIMax(); k+= rightWin.getStepSizeY()){
-        ComplexNumber c = new ComplexNumber(i,k);//in complexNum
+        ComplexNumber c = new ComplexNumber(i,k);
         // System.out.println(mandelRec(c, 0,  complexZero));
 
         int count = mandelRec(lP, 0,  c);
@@ -212,7 +228,7 @@ public class JuliaSetGenerator{
         StdDraw.filledCircle(rightWin.mapX(i),rightWin.mapY(k),1);
       }
     }
-    StdDraw.show(); 
+    StdDraw.show();
   }//end drawJulia
 
 
@@ -221,7 +237,7 @@ public class JuliaSetGenerator{
     ComplexNumber ret = Zn1.square().add(c);
     if(ret.magnitude() > 2){
       return count;
-    } else if(count > 360){//changing this number would create more definition
+    } else if(count > 360){
       return -1;
     } else{
       return mandelRec(c, count+1, ret);
